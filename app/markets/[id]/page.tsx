@@ -166,13 +166,22 @@ export default function MarketPage() {
                                 <label className="text-sm text-zinc-400 mb-1 block">Amount (USDC)</label>
                                 <div className="relative">
                                     <input
-                                        type="number"
+                                        type="text"
+                                        inputMode="decimal"
                                         value={amount}
-                                        onChange={(e) => setAmount(e.target.value)}
+                                        onChange={(e) => {
+                                            // Keep it forgiving: allow digits + a single dot
+                                            const next = e.target.value.replace(/[^0-9.]/g, "");
+                                            const parts = next.split(".");
+                                            const normalized = parts.length <= 2 ? next : `${parts[0]}.${parts.slice(1).join("")}`;
+                                            setAmount(normalized);
+                                        }}
                                         placeholder="0.00"
-                                        className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-4 pr-16 py-3 text-white placeholder:text-zinc-600 focus:border-cyan-500 focus:outline-none transition-colors"
+                                        className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-4 pr-20 py-3 text-white placeholder:text-zinc-600 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 focus:outline-none transition-colors"
                                     />
-                                    <span className="absolute right-4 top-3 text-zinc-500">USDC</span>
+                                    <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium tracking-wide text-zinc-400 bg-zinc-900/60 border border-zinc-700/60 px-2 py-1 rounded-md backdrop-blur-sm">
+                                        USDC
+                                    </span>
                                 </div>
                             </div>
 
