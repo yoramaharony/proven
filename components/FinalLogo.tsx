@@ -33,6 +33,7 @@ export function FinalLogo({
       width={config.width}
       height={config.height}
       priority={size === "small"}
+      unoptimized
       className={className}
     />
   );
