@@ -36,6 +36,19 @@ firebase emulators:start
 npm run seed:emulator -- --wipe
 ```
 
+### Do I need to re-seed every time?
+
+- **If you keep the emulator running**: you generally only need to seed once (data stays for that emulator session).
+- **If you stop and restart the emulator**:
+  - By default, emulator data is typically **not persisted** between restarts.
+  - To persist data across restarts, start the emulator with import/export:
+
+```bash
+firebase emulators:start --import=./.firebase-emulator-data --export-on-exit
+```
+
+- **When to use `--wipe`**: use it when you want a clean slate / predictable demo dataset.
+
 This seeds:
 - `markets` (OPEN / LOCKED / RESOLVED examples)
 - `priceTicks` (30-day history per market)
