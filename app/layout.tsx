@@ -12,12 +12,11 @@ export const metadata: Metadata = {
   title: "Proven.so | Prediction Markets",
   description: "Get rewarded for being right — and have it proven.",
   icons: {
-    // Prefer Next's native app/icon.png, but also include a favicon.png fallback.
+    // Prefer Next's native app/icon.png. (Do not reference /favicon.png: it's not a public URL.)
     icon: [
       { url: "/icon.png", type: "image/png" },
-      { url: "/favicon.png", type: "image/png" },
     ],
-    shortcut: ["/icon.png", "/favicon.png"],
+    shortcut: ["/icon.png"],
   },
 };
 
