@@ -12,9 +12,12 @@ export const metadata: Metadata = {
   title: "Proven.so | Prediction Markets",
   description: "Get rewarded for being right — and have it proven.",
   icons: {
-    // Ensure browsers use the new PNG tab icon (in addition to Next's file-based icon handling).
-    icon: [{ url: "/favicon.png", type: "image/png" }],
-    shortcut: ["/favicon.png"],
+    // Prefer Next's native app/icon.png, but also include a favicon.png fallback.
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    shortcut: ["/icon.png", "/favicon.png"],
   },
 };
 
