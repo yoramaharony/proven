@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { collection, getDocs, query, where, orderBy, Timestamp } from "firebase/firestore";
+import { collection, getDocs, query, where, Timestamp } from "firebase/firestore";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -13,16 +13,18 @@ export async function GET(request: Request) {
     try {
         const q = query(
             collection(db, "trades"),
-            where("userId", "==", userId),
-            orderBy("createdAt", "desc")
+            where("userId", "==", userId)
         );
 
         const snapshot = await getDocs(q);
-        const trades = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data(),
-            createdAt: (doc.data().createdAt as Timestamp)?.toDate().toISOString()
-        }));
+        const trades = snapshot.docs
+            .map(doc => ({
+                id: doc.id,
+                ...doc.data(),
+                createdAt: (doc.data().createdAt as Timestamp)?.toDate().toISOString()
+            }))
+            // Avoid composite index requirement in emulator by sorting in memory
+            .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
         return NextResponse.json(trades);
     } catch (error) {

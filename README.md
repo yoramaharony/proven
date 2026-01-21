@@ -20,6 +20,27 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Local Firebase Emulator + Seed Data
+
+This repo is configured for the **Firestore emulator on port 8080** (see `firebase.json`). In development, the app connects to the emulator automatically via `lib/firebase.ts`.
+
+- **Start the emulator** (in a separate terminal):
+
+```bash
+firebase emulators:start
+```
+
+- **Load seed data into the emulator** (from this repo):
+
+```bash
+npm run seed:emulator -- --wipe
+```
+
+This seeds:
+- `markets` (OPEN / LOCKED / RESOLVED examples)
+- `priceTicks` (30-day history per market)
+- `positions` + `trades` (a few wallet-like demo users)
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
