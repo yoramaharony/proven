@@ -170,7 +170,7 @@ export default function MarketPage() {
                                         value={amount}
                                         onChange={(e) => setAmount(e.target.value)}
                                         placeholder="0.00"
-                                        className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-3 text-white placeholder:text-zinc-600 focus:border-cyan-500 focus:outline-none transition-colors"
+                                        className="w-full bg-zinc-950 border border-zinc-700 rounded-lg pl-4 pr-16 py-3 text-white placeholder:text-zinc-600 focus:border-cyan-500 focus:outline-none transition-colors"
                                     />
                                     <span className="absolute right-4 top-3 text-zinc-500">USDC</span>
                                 </div>

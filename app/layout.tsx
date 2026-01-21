@@ -11,6 +11,11 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 export const metadata: Metadata = {
   title: "Proven.so | Prediction Markets",
   description: "Get rewarded for being right — and have it proven.",
+  icons: {
+    // Ensure browsers use the new PNG tab icon (in addition to Next's file-based icon handling).
+    icon: [{ url: "/favicon.png", type: "image/png" }],
+    shortcut: ["/favicon.png"],
+  },
 };
 
 export default function RootLayout({

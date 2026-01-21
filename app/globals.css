@@ -176,3 +176,15 @@
     line-height: 1.5;
   }
 }
+
+/* Hide number input spinners (prevents the white box overlaying the "USDC" suffix) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
