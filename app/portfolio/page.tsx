@@ -1,28 +1,35 @@
 "use client";
 
+import { Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigation } from "@/components/ui/Navigation";
 import { PositionJson, TradeJson } from "@/lib/types";
 import { Button } from "@/components/ui/Button";
+import { useSearchParams } from "next/navigation";
+import { useAccount } from "wagmi";
 
 // Demo User ID
 const USER_ID = "user_demo";
 
-export default function PortfolioPage() {
+function PortfolioInner() {
+    const searchParams = useSearchParams();
+    const paramUserId = searchParams.get("userId") || undefined;
+    const { address } = useAccount();
+    const effectiveUserId = paramUserId || address || USER_ID;
 
     const { data: positions, isLoading: posLoading } = useQuery({
-        queryKey: ["positions", USER_ID],
+        queryKey: ["positions", effectiveUserId],
         queryFn: async () => {
-            const res = await fetch(`/api/positions?userId=${USER_ID}`);
+            const res = await fetch(`/api/positions?userId=${effectiveUserId}`);
             if (!res.ok) throw new Error("Failed to fetch positions");
             return res.json() as Promise<PositionJson[]>;
         }
     });
 
     const { data: trades, isLoading: tradesLoading } = useQuery({
-        queryKey: ["trades", USER_ID],
+        queryKey: ["trades", effectiveUserId],
         queryFn: async () => {
-            const res = await fetch(`/api/trades?userId=${USER_ID}`);
+            const res = await fetch(`/api/trades?userId=${effectiveUserId}`);
             if (!res.ok) throw new Error("Failed to fetch trades");
             return res.json() as Promise<TradeJson[]>;
         }
@@ -34,6 +41,12 @@ export default function PortfolioPage() {
 
             <main className="max-w-7xl mx-auto px-6 py-8">
                 <h1 className="text-3xl font-light mb-8">Your Track Record</h1>
+                <div className="text-sm text-zinc-500 mb-8">
+                    Viewing as: <span className="text-zinc-300">{effectiveUserId}</span>
+                    {!paramUserId && !address && (
+                        <span className="ml-2 text-zinc-600">(demo user)</span>
+                    )}
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Open Positions */}
@@ -134,5 +147,13 @@ export default function PortfolioPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function PortfolioPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-black text-white">Loading...</div>}>
+            <PortfolioInner />
+        </Suspense>
     );
 }

@@ -56,6 +56,8 @@ const now = Date.now();
 const isoDay = 24 * 60 * 60 * 1000;
 
 const users = [
+  // App's portfolio page defaults to this demo user id (unless wallet connected or ?userId=)
+  { id: "user_demo", label: "Demo" },
   // Wallet-like ids to match UI’s wagmi address usage
   { id: "0x1111111111111111111111111111111111111111", label: "Alice" },
   { id: "0x2222222222222222222222222222222222222222", label: "Bob" },
@@ -151,12 +153,16 @@ function mkTradesAndPositions() {
 
   // A simple deterministic pattern so it’s consistent across seeds.
   const tradeTemplates = [
+    // Seed some data for the demo user used by /portfolio by default
     { userIdx: 0, marketIdx: 0, side: "YES", usdc: 250 },
+    { userIdx: 0, marketIdx: 1, side: "YES", usdc: 300 },
+    { userIdx: 0, marketIdx: 2, side: "NO", usdc: 125 },
+
+    // Additional “real wallet” activity
     { userIdx: 1, marketIdx: 1, side: "NO", usdc: 500 },
     { userIdx: 2, marketIdx: 2, side: "YES", usdc: 125 },
-    { userIdx: 0, marketIdx: 1, side: "YES", usdc: 300 },
-    { userIdx: 1, marketIdx: 2, side: "YES", usdc: 200 },
-    { userIdx: 2, marketIdx: 0, side: "NO", usdc: 400 },
+    { userIdx: 3, marketIdx: 0, side: "NO", usdc: 400 },
+    { userIdx: 2, marketIdx: 0, side: "YES", usdc: 200 },
   ];
 
   let tradeCounter = 0;
